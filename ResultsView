@@ -1,0 +1,141 @@
+import SwiftUI
+import UIKit
+import Foundation
+
+struct TireSize: Hashable {
+    var width: String
+    var ratio: String
+    var diameter: String
+}
+
+struct ResultsView: View {
+    var result: String // The tire size result string
+    @State private var tireSizes: [TireSize] = []
+    @State private var showingInfoAlert = false
+    @State private var infoMessage = ""
+
+    var body: some View {
+        ZStack {
+            // Background
+            Color(.systemGray6).edgesIgnoringSafeArea(.all)
+
+            // Content
+            VStack {
+                // Title
+                Text("Tire Size Results")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding()
+
+                // Tire Size Bubbles
+                ForEach(tireSizes, id: \.self) { tireSize in
+                    VStack {
+                        SpecificationBubble(title: "Width", value: tireSize.width) {
+                            showInfo("Width is the cross-sectional width of the tire in millimeters.")
+                        }
+                        SpecificationBubble(title: "Aspect Ratio", value: tireSize.ratio) {
+                            showInfo("Aspect ratio is the height of the tire sidewall as a percentage of the tire width.")
+                        }
+                        SpecificationBubble(title: "Diameter", value: tireSize.diameter) {
+                            showInfo("Diameter is the size of the tire wheel measured from one end to the other in inches.")
+                        }
+                    }
+                }
+
+                // Search Button
+                if !tireSizes.isEmpty, let tireSize = tireSizes.first {
+                    Button(action: {
+                        searchGoogleFor(tireSize: tireSize)
+                    }) {
+                        Text("Search For This Tire On Google")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
+                    .padding()
+                }
+            }
+        }
+        .onAppear {
+            tireSizes = parseTireSize(from: result)
+        }
+        .alert(isPresented: $showingInfoAlert) {
+            Alert(title: Text("Information"), message: Text(infoMessage), dismissButton: .default(Text("OK")))
+        }
+    }
+
+
+    func parseTireSize(from result: String) -> [TireSize] {
+        let pattern = #"(\d{3})\/(\d{2})\D+(\d{2})"#
+        var tireSizes = [TireSize]()
+
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        let matches = regex?.matches(in: result, options: [], range: NSRange(result.startIndex..., in: result))
+
+        if let matches = matches, !matches.isEmpty {
+            for match in matches {
+                if let widthRange = Range(match.range(at: 1), in: result),
+                   let ratioRange = Range(match.range(at: 2), in: result),
+                   let diameterRange = Range(match.range(at: 3), in: result) {
+
+                    let width = String(result[widthRange])
+                    let ratio = String(result[ratioRange])
+                    let diameter = String(result[diameterRange])
+
+                    print("Parsed: Width \(width), Ratio \(ratio), Diameter \(diameter)")
+                    tireSizes.append(TireSize(width: width, ratio: ratio, diameter: diameter))
+                    break // Exit the loop after the first valid match
+                }
+            }
+        } else {
+            print("No matches found in the result string.")
+        }
+
+        return tireSizes
+    }
+
+
+
+    func showInfo(_ message: String) {
+        infoMessage = message
+        showingInfoAlert = true
+    }
+    
+    func searchGoogleFor(tireSize: TireSize) {
+        guard let url = URL(string: "https://www.google.com/search?q=\(tireSize.width)%2F\(tireSize.ratio)%20R\(tireSize.diameter)%20tire") else {
+            print("Invalid URL")
+            return
+        }
+        UIApplication.shared.open(url)
+    }
+}
+
+struct SpecificationBubble: View {
+    var title: String
+    var value: String
+    var infoAction: () -> Void
+
+    var body: some View {
+        HStack {
+            Text(title + ": " + value)
+                .foregroundColor(.black)
+            Spacer()
+            Button(action: infoAction) {
+                Image(systemName: "info.circle")
+                    .foregroundColor(.blue)
+            }
+        }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(radius: 5)
+    }
+}
+
+
+struct ResultsView_Previews: PreviewProvider {
+    static var previews: some View {
+        ResultsView(result: "TA 205/55 R16 94 M T EXTRA LOAD ROTATION 205/55 R 16 V XL 172 MAX INFLATION PRESSURE 350 KPA G1PS) MAX LOAD 670 KG (14 37 LB) PARA DAMA DEN MIN NI 30TH NO *** ANG 10-12 TANGAN Reloguesees V STAY KO **** www SAFETY WARNING 15ISTS www 2014 à se saG INUN WE SAW de *** **** SYEN KON Case for CAM PTORAN u sur Seine Les DREN WANNY & MWEN SON SINH GIUNTA")
+    }
+}
