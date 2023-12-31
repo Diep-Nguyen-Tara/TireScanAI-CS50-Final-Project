@@ -1,0 +1,11 @@
+
+import SwiftUI
+
+@main
+struct T3App: App {
+    var body: some Scene {
+        WindowGroup {
+            SplashScreenView()
+        }
+    }
+}
