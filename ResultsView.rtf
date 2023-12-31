@@ -1,0 +1,273 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2758
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Bold;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red252\green95\blue163;\red31\green31\blue36;\red255\green255\blue255;
+\red93\green216\blue255;\red208\green168\blue255;\red65\green161\blue192;\red208\green168\blue255;\red108\green121\blue134;
+\red158\green241\blue221;\red252\green106\blue93;\red161\green103\blue230;\red161\green103\blue230;\red103\green183\blue164;
+\red103\green183\blue164;\red208\green191\blue105;}
+{\*\expandedcolortbl;;\csgenericrgb\c98839\c37355\c63833;\csgenericrgb\c12054\c12284\c14131;\csgenericrgb\c100000\c100000\c100000\c85000;
+\csgenericrgb\c36295\c84643\c99897;\csgenericrgb\c81569\c65882\c100000;\csgenericrgb\c25490\c63137\c75294;\csgenericrgb\c81681\c65692\c99927;\csgenericrgb\c42394\c47462\c52518;
+\csgenericrgb\c62145\c94386\c86819;\csgenericrgb\c98912\c41558\c36568;\csgenericrgb\c63232\c40219\c90115;\csgenericrgb\c63137\c40392\c90196;\csgenericrgb\c40538\c71705\c64209;
+\csgenericrgb\c40392\c71765\c64314;\csgenericrgb\c81498\c74939\c41233;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab593
+\pard\tx593\pardeftab593\partightenfactor0
+
+\f0\b\fs24 \cf2 \cb3 import
+\f1\b0 \cf4  SwiftUI\
+
+\f0\b \cf2 import
+\f1\b0 \cf4  UIKit\
+
+\f0\b \cf2 import
+\f1\b0 \cf4  Foundation\
+\
+
+\f0\b \cf2 struct
+\f1\b0 \cf4  \cf5 TireSize\cf4 : \cf6 Hashable\cf4  \{\
+    
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 width\cf4 : \cf8 String\cf4 \
+    
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 ratio\cf4 : \cf8 String\cf4 \
+    
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 diameter\cf4 : \cf8 String\cf4 \
+\}\
+\
+
+\f0\b \cf2 struct
+\f1\b0 \cf4  \cf5 ResultsView\cf4 : \cf6 View\cf4  \{\
+    
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 result\cf4 : \cf8 String\cf4  \cf9 // The tire size result string\cf4 \
+    \cf8 @State\cf4  
+\f0\b \cf2 private
+\f1\b0 \cf4  
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 tireSizes\cf4 : [\cf10 TireSize\cf4 ] = []\
+    \cf8 @State\cf4  
+\f0\b \cf2 private
+\f1\b0 \cf4  
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 showingInfoAlert\cf4  = 
+\f0\b \cf2 false
+\f1\b0 \cf4 \
+    \cf8 @State\cf4  
+\f0\b \cf2 private
+\f1\b0 \cf4  
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 infoMessage\cf4  = \cf11 \cb3 ""\cf4 \cb3 \
+\
+    
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 body\cf4 : 
+\f0\b \cf2 some
+\f1\b0 \cf4  \cf6 View\cf4  \{\
+        \cf8 ZStack\cf4  \{\
+            \cf9 // Background\cf4 \
+            \cf8 Color\cf4 (.\cf12 \cb3 systemGray6\cf4 \cb3 ).\cf13 \cb3 edgesIgnoringSafeArea\cf4 \cb3 (.\cf12 \cb3 all\cf4 \cb3 )\
+\
+            \cf9 // Content\cf4 \
+            \cf8 VStack\cf4  \{\
+                \cf9 // Title\cf4 \
+                \cf8 Text\cf4 (\cf11 \cb3 "Tire Size Results"\cf4 \cb3 )\
+                    .\cf13 \cb3 font\cf4 \cb3 (.\cf12 \cb3 largeTitle\cf4 \cb3 )\
+                    .\cf13 \cb3 fontWeight\cf4 \cb3 (.\cf12 \cb3 bold\cf4 \cb3 )\
+                    .\cf13 \cb3 padding\cf4 \cb3 ()\
+\
+                \cf9 // Tire Size Bubbles\cf4 \
+                \cf8 ForEach\cf4 (\cf14 \cb3 tireSizes\cf4 \cb3 , \cf13 \cb3 id\cf4 \cb3 : \\.
+\f0\b \cf2 self
+\f1\b0 \cf4 ) \{ tireSize 
+\f0\b \cf2 in
+\f1\b0 \cf4 \
+                    \cf8 VStack\cf4  \{\
+                        \cf10 SpecificationBubble\cf4 (\cf15 \cb3 title\cf4 \cb3 : \cf11 \cb3 "Width"\cf4 \cb3 , \cf15 \cb3 value\cf4 \cb3 : tireSize.width) \{\
+                            \cf15 \cb3 showInfo\cf4 \cb3 (\cf11 \cb3 "Width is the cross-sectional width of the tire in millimeters."\cf4 \cb3 )\
+                        \}\
+                        \cf10 SpecificationBubble\cf4 (\cf15 \cb3 title\cf4 \cb3 : \cf11 \cb3 "Aspect Ratio"\cf4 \cb3 , \cf15 \cb3 value\cf4 \cb3 : tireSize.\cf14 \cb3 ratio\cf4 \cb3 ) \{\
+                            \cf15 \cb3 showInfo\cf4 \cb3 (\cf11 \cb3 "Aspect ratio is the height of the tire sidewall as a percentage of the tire width."\cf4 \cb3 )\
+                        \}\
+                        \cf10 SpecificationBubble\cf4 (\cf15 \cb3 title\cf4 \cb3 : \cf11 \cb3 "Diameter"\cf4 \cb3 , \cf15 \cb3 value\cf4 \cb3 : tireSize.\cf14 \cb3 diameter\cf4 \cb3 ) \{\
+                            \cf15 \cb3 showInfo\cf4 \cb3 (\cf11 \cb3 "Diameter is the size of the tire wheel measured from one end to the other in inches."\cf4 \cb3 )\
+                        \}\
+                    \}\
+                \}\
+\
+                \cf9 // Search Button\cf4 \
+                
+\f0\b \cf2 if
+\f1\b0 \cf4  !\cf14 \cb3 tireSizes\cf4 \cb3 .\cf12 \cb3 isEmpty\cf4 \cb3 , 
+\f0\b \cf2 let
+\f1\b0 \cf4  tireSize = \cf14 \cb3 tireSizes\cf4 \cb3 .\cf12 \cb3 first\cf4 \cb3  \{\
+                    \cf8 Button\cf4 (\cf13 \cb3 action\cf4 \cb3 : \{\
+                        \cf15 \cb3 searchGoogleFor\cf4 \cb3 (\cf15 \cb3 tireSize\cf4 \cb3 : tireSize)\
+                    \}) \{\
+                        \cf8 Text\cf4 (\cf11 \cb3 "Search For This Tire On Google"\cf4 \cb3 )\
+                            .\cf13 \cb3 foregroundColor\cf4 \cb3 (.\cf12 \cb3 white\cf4 \cb3 )\
+                            .\cf13 \cb3 padding\cf4 \cb3 ()\
+                            .\cf13 \cb3 background\cf4 \cb3 (\cf8 Color\cf4 .\cf12 \cb3 blue\cf4 \cb3 )\
+                            .\cf13 \cb3 cornerRadius\cf4 \cb3 (\cf16 \cb3 10\cf4 \cb3 )\
+                    \}\
+                    .\cf13 \cb3 padding\cf4 \cb3 ()\
+                \}\
+            \}\
+        \}\
+        .\cf13 \cb3 onAppear\cf4 \cb3  \{\
+            \cf14 \cb3 tireSizes\cf4 \cb3  = \cf15 \cb3 parseTireSize\cf4 \cb3 (\cf15 \cb3 from\cf4 \cb3 : \cf14 \cb3 result\cf4 \cb3 )\
+        \}\
+        .\cf13 \cb3 alert\cf4 \cb3 (\cf13 \cb3 isPresented\cf4 \cb3 : \cf14 \cb3 $showingInfoAlert\cf4 \cb3 ) \{\
+            \cf8 Alert\cf4 (\cf13 \cb3 title\cf4 \cb3 : \cf8 Text\cf4 (\cf11 \cb3 "Information"\cf4 \cb3 ), \cf13 \cb3 message\cf4 \cb3 : \cf8 Text\cf4 (\cf14 \cb3 infoMessage\cf4 \cb3 ), \cf13 \cb3 dismissButton\cf4 \cb3 : .\cf13 \cb3 default\cf4 \cb3 (\cf8 Text\cf4 (\cf11 \cb3 "OK"\cf4 \cb3 )))\
+        \}\
+    \}\
+\
+\
+    
+\f0\b \cf2 func
+\f1\b0 \cf4  \cf7 parseTireSize\cf4 (\cf7 from\cf4  result: \cf8 String\cf4 ) -> [\cf10 TireSize\cf4 ] \{\
+        
+\f0\b \cf2 let
+\f1\b0 \cf4  pattern = \cf11 \cb3 #"(\\d\{3\})\\/(\\d\{2\})\\D+(\\d\{2\})"#\cf4 \cb3 \
+        
+\f0\b \cf2 var
+\f1\b0 \cf4  tireSizes = [\cf10 TireSize\cf4 ]()\
+\
+        
+\f0\b \cf2 let
+\f1\b0 \cf4  regex = 
+\f0\b \cf2 try
+\f1\b0 \cf4 ? \cf6 NSRegularExpression\cf4 (\cf13 \cb3 pattern\cf4 \cb3 : pattern, \cf13 \cb3 options\cf4 \cb3 : [])\
+        
+\f0\b \cf2 let
+\f1\b0 \cf4  matches = regex?.\cf13 \cb3 matches\cf4 \cb3 (\cf13 \cb3 in\cf4 \cb3 : result, \cf13 \cb3 options\cf4 \cb3 : [], \cf13 \cb3 range\cf4 \cb3 : \cf8 NSRange\cf4 (result.\cf12 \cb3 startIndex\cf4 \cb3 ..., \cf13 \cb3 in\cf4 \cb3 : result))\
+\
+        
+\f0\b \cf2 if
+\f1\b0 \cf4  
+\f0\b \cf2 let
+\f1\b0 \cf4  matches = matches, !matches.\cf12 \cb3 isEmpty\cf4 \cb3  \{\
+            
+\f0\b \cf2 for
+\f1\b0 \cf4  match 
+\f0\b \cf2 in
+\f1\b0 \cf4  matches \{\
+                
+\f0\b \cf2 if
+\f1\b0 \cf4  
+\f0\b \cf2 let
+\f1\b0 \cf4  widthRange = \cf8 Range\cf4 (match.\cf13 \cb3 range\cf4 \cb3 (\cf13 \cb3 at\cf4 \cb3 : \cf16 \cb3 1\cf4 \cb3 ), \cf13 \cb3 in\cf4 \cb3 : result),\
+                   
+\f0\b \cf2 let
+\f1\b0 \cf4  ratioRange = \cf8 Range\cf4 (match.\cf13 \cb3 range\cf4 \cb3 (\cf13 \cb3 at\cf4 \cb3 : \cf16 \cb3 2\cf4 \cb3 ), \cf13 \cb3 in\cf4 \cb3 : result),\
+                   
+\f0\b \cf2 let
+\f1\b0 \cf4  diameterRange = \cf8 Range\cf4 (match.\cf13 \cb3 range\cf4 \cb3 (\cf13 \cb3 at\cf4 \cb3 : \cf16 \cb3 3\cf4 \cb3 ), \cf13 \cb3 in\cf4 \cb3 : result) \{\
+\
+                    
+\f0\b \cf2 let
+\f1\b0 \cf4  width = \cf8 String\cf4 (result[widthRange])\
+                    
+\f0\b \cf2 let
+\f1\b0 \cf4  ratio = \cf8 String\cf4 (result[ratioRange])\
+                    
+\f0\b \cf2 let
+\f1\b0 \cf4  diameter = \cf8 String\cf4 (result[diameterRange])\
+\
+                    \cf13 \cb3 print\cf4 \cb3 (\cf11 \cb3 "Parsed: Width \cf4 \cb3 \\(width)\cf11 \cb3 , Ratio \cf4 \cb3 \\(ratio)\cf11 \cb3 , Diameter \cf4 \cb3 \\(diameter)\cf11 \cb3 "\cf4 \cb3 )\
+                    tireSizes.\cf13 \cb3 append\cf4 \cb3 (\cf10 TireSize\cf4 (\cf15 \cb3 width\cf4 \cb3 : width, \cf15 \cb3 ratio\cf4 \cb3 : ratio, \cf15 \cb3 diameter\cf4 \cb3 : diameter))\
+                    
+\f0\b \cf2 break
+\f1\b0 \cf4  \cf9 // Exit the loop after the first valid match\cf4 \
+                \}\
+            \}\
+        \} 
+\f0\b \cf2 else
+\f1\b0 \cf4  \{\
+            \cf13 \cb3 print\cf4 \cb3 (\cf11 \cb3 "No matches found in the result string."\cf4 \cb3 )\
+        \}\
+\
+        
+\f0\b \cf2 return
+\f1\b0 \cf4  tireSizes\
+    \}\
+\
+\
+\
+    
+\f0\b \cf2 func
+\f1\b0 \cf4  \cf7 showInfo\cf4 (\cf7 _\cf4  message: \cf8 String\cf4 ) \{\
+        \cf14 \cb3 infoMessage\cf4 \cb3  = message\
+        \cf14 \cb3 showingInfoAlert\cf4 \cb3  = 
+\f0\b \cf2 true
+\f1\b0 \cf4 \
+    \}\
+    \
+    
+\f0\b \cf2 func
+\f1\b0 \cf4  \cf7 searchGoogleFor\cf4 (\cf7 tireSize\cf4 : \cf10 TireSize\cf4 ) \{\
+        
+\f0\b \cf2 guard
+\f1\b0 \cf4  
+\f0\b \cf2 let
+\f1\b0 \cf4  url = \cf8 URL\cf4 (\cf13 \cb3 string\cf4 \cb3 : \cf11 \cb3 "https://www.google.com/search?q=\cf4 \cb3 \\(tireSize.\cf14 \cb3 width\cf4 \cb3 )\cf11 \cb3 %2F\cf4 \cb3 \\(tireSize.\cf14 \cb3 ratio\cf4 \cb3 )\cf11 \cb3 %20R\cf4 \cb3 \\(tireSize.\cf14 \cb3 diameter\cf4 \cb3 )\cf11 \cb3 %20tire"\cf4 \cb3 ) 
+\f0\b \cf2 else
+\f1\b0 \cf4  \{\
+            \cf13 \cb3 print\cf4 \cb3 (\cf11 \cb3 "Invalid URL"\cf4 \cb3 )\
+            
+\f0\b \cf2 return
+\f1\b0 \cf4 \
+        \}\
+        \cf6 UIApplication\cf4 .\cf12 \cb3 shared\cf4 \cb3 .\cf13 \cb3 open\cf4 \cb3 (url)\
+    \}\
+\}\
+\
+
+\f0\b \cf2 struct
+\f1\b0 \cf4  \cf5 SpecificationBubble\cf4 : \cf6 View\cf4  \{\
+    
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 title\cf4 : \cf8 String\cf4 \
+    
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 value\cf4 : \cf8 String\cf4 \
+    
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 infoAction\cf4 : () -> \cf8 Void\cf4 \
+\
+    
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 body\cf4 : 
+\f0\b \cf2 some
+\f1\b0 \cf4  \cf6 View\cf4  \{\
+        \cf8 HStack\cf4  \{\
+            \cf8 Text\cf4 (\cf14 \cb3 title\cf4 \cb3  + \cf11 \cb3 ": "\cf4 \cb3  + \cf14 \cb3 value\cf4 \cb3 )\
+                .\cf13 \cb3 foregroundColor\cf4 \cb3 (.\cf12 \cb3 black\cf4 \cb3 )\
+            \cf8 Spacer\cf4 ()\
+            \cf8 Button\cf4 (\cf13 \cb3 action\cf4 \cb3 : \cf14 \cb3 infoAction\cf4 \cb3 ) \{\
+                \cf8 Image\cf4 (\cf13 \cb3 systemName\cf4 \cb3 : \cf11 \cb3 "info.circle"\cf4 \cb3 )\
+                    .\cf13 \cb3 foregroundColor\cf4 \cb3 (.\cf12 \cb3 blue\cf4 \cb3 )\
+            \}\
+        \}\
+        .\cf13 \cb3 padding\cf4 \cb3 ()\
+        .\cf13 \cb3 background\cf4 \cb3 (\cf8 Color\cf4 .\cf12 \cb3 white\cf4 \cb3 )\
+        .\cf13 \cb3 cornerRadius\cf4 \cb3 (\cf16 \cb3 10\cf4 \cb3 )\
+        .\cf13 \cb3 shadow\cf4 \cb3 (\cf13 \cb3 radius\cf4 \cb3 : \cf16 \cb3 5\cf4 \cb3 )\
+    \}\
+\}\
+\
+\
+
+\f0\b \cf2 struct
+\f1\b0 \cf4  \cf5 ResultsView_Previews\cf4 : \cf6 PreviewProvider\cf4  \{\
+    
+\f0\b \cf2 static
+\f1\b0 \cf4  
+\f0\b \cf2 var
+\f1\b0 \cf4  \cf7 previews\cf4 : 
+\f0\b \cf2 some
+\f1\b0 \cf4  \cf6 View\cf4  \{\
+        \cf10 ResultsView\cf4 (\cf15 \cb3 result\cf4 \cb3 : \cf11 \cb3 "TA 205/55 R16 94 M T EXTRA LOAD ROTATION 205/55 R 16 V XL 172 MAX INFLATION PRESSURE 350 KPA G1PS) MAX LOAD 670 KG (14 37 LB) PARA DAMA DEN MIN NI 30TH NO *** ANG 10-12 TANGAN Reloguesees V STAY KO **** www SAFETY WARNING 15ISTS www 2014 \'e0 se saG INUN WE SAW de *** **** SYEN KON Case for CAM PTORAN u sur Seine Les DREN WANNY & MWEN SON SINH GIUNTA"\cf4 \cb3 )\
+    \}\
+\}\
+}
