@@ -1,6 +1,4 @@
-# TireScanAI
- 
-By Tara Diep Nguyen
+# TireScanAI by Tara Diep Nguyen
  
 Video Demo:
 --
