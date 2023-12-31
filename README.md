@@ -1,4 +1,4 @@
-# TireScanAI - An AI app by Tara Diep Nguyen
+# TireScanAI - An AI app by Diep Nguyen
 
 Video Demo:
 --
