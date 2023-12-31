@@ -5,7 +5,8 @@ Video Demo:
  
 YouTube link: https://www.youtube.com/watch?v=9LM_WB9EAXM
 
-**Description
+Description:
+--
 
 Hi, my name is Diep Nguyen, people also call me Tara. This is my app called TireScanAI. 
 
