@@ -26,9 +26,9 @@ This would've helped me a lot in the past, but now I hope it can help someone el
 File Descriptions:
 --
 
-**T3App: This file is the first interacts when opening the app that directs the app to enter the splash screen rather than the usual default ContentView file.
+**T3App**: This file is the first interacts when opening the app that directs the app to enter the splash screen rather than the usual default ContentView file.
 
-SplashscreenView: This file is the first screen that the user sees as soon as they open the app. It then directs to the ContentView file. Creating this file first allowed me to get a sense of the futuristic/blue design of the app.
+<strong>SplashscreenView</strong> This file is the first screen that the user sees as soon as they open the app. It then directs to the ContentView file. Creating this file first allowed me to get a sense of the futuristic/blue design of the app.
 
 ContentView: This is the main page where the user interacts with the app. I decided to make this app as easy and intuitive to use so I made the background tire picture the layout of the app where the user can easily know what the app is about and how to start interacting with it by only having a big button that starts the photo capturing process. When the app is opened for the first time, I had to enable the app the ask the user from an iOS system level to allow the app to open the camera app. Once the camera view appears, the user can take the picture of the tire and submit the picture. From here, the app connects to Google's VisionAI through the API and send the picture for the AI to retrienve all the wording on the tire. The end of the code here sends the user to the ResultsView file.
 
