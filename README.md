@@ -26,7 +26,7 @@ This would've helped me a lot in the past, but now I hope it can help someone el
 File Descriptions:
 --
 
-T3App: This file is the first interacts when opening the app that directs the app to enter the splash screen rather than the usual default ContentView file.
+**T3App: This file is the first interacts when opening the app that directs the app to enter the splash screen rather than the usual default ContentView file.
 
 SplashscreenView: This file is the first screen that the user sees as soon as they open the app. It then directs to the ContentView file. Creating this file first allowed me to get a sense of the futuristic/blue design of the app.
 
