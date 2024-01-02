@@ -24,6 +24,7 @@ For future business versions, I'd like to integrate it to Walmart API or other t
 This would've helped me a lot in the past, but now I hope it can help someone else save time, money, and stress.
 
 File Descriptions:
+--
 
 T3App: This file is the first interacts when opening the app that directs the app to enter the splash screen rather than the usual default ContentView file.
 
